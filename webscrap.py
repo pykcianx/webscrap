@@ -11,29 +11,24 @@ options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 PATH = "C:\Program Files (x86)\chromedriver.exe"
 driver = webdriver.Chrome(PATH, options=options)
-driver.get("https://mailingio.io/companies/write/prod")
+driver.get("https://example.pl/firmy/spis/producenci")
 
 
 
-with open('bazamail.csv', 'w', newline='', encoding='utf_8_sig') as csvfile:
+with open('data.csv', 'w', newline='', encoding='utf_8_sig') as csvfile:
     writer = csv.writer(csvfile, dialect = 'excel')
 
     for strona in range(5): 
+        nazwyfirm = driver.find_elements_by_xpath("//div[@class='title']/a")
+        numerytel = driver.find_elements_by_class_name("btn.btn-primary.btn-xs")
+        naststrona = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.LINK_TEXT, "→")))
         try: 
 
-            nazwyfirm = driver.find_elements_by_xpath("//div[@class='title']/a")
-            maile = driver.find_elements_by_class_name("btn.btn-primary.btn-xs")
-            naststrona = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.LINK_TEXT, "→")))
-            #elems = zip(nazwyfirm,numerytel)
+            for nazwa, tel in zip(nazwyfirm,numerytel):
+                n = nazwa.text.split(",")
+                t = tel.get_attribute('data-hidden-value').split(',')
 
-            for nazwy in nazwyfirm:
-                print(nazwy.text)
-                writer.writerows([nazwy.text.split(',')])
-
-            for tel in maile:
-                print(tel.get_attribute('data-hidden-value'))
-                writer.writerows([tel.get_attribute('data-hidden-value').split(',')])
-
+                writer.writerows(zip(n, t))
 
 
         finally:
