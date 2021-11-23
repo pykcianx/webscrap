@@ -12,7 +12,7 @@ options = webdriver.ChromeOptions()
 options.add_experimental_option("excludeSwitches", ["enable-logging"])
 PATH = "C:\Program Files (x86)\chromedriver.exe"
 driver = webdriver.Chrome(PATH, options=options)
-driver.get("exampel.com")
+driver.get("https://example.pl/category")
 
 
 driver.find_element_by_xpath('/html/body/div[6]/div[1]/div/div/div[4]/i').click()
@@ -26,7 +26,7 @@ def extractfirmy():
 
     listalist = zip(nazwy, numerytel, maile)
     for nazwa, numer, mail in listalist:
-        n = nazwa.get_attribute("text")
+        n = nazwa.get_attribute("text").strip()
         nr = numer.get_attribute("data-original-title")
         m = mail.get_attribute("data-company-email")
 
@@ -38,7 +38,7 @@ def extractfirmy():
 
 
 with open('pfkam.csv', 'w', newline='', encoding='utf_8_sig') as csvfile:
-    writer = csv.writer(csvfile, dialect = 'excel', delimiter=",")
+    writer = csv.writer(csvfile, dialect = 'excel', delimiter="|")
 
 
     for strona in range(5): 
