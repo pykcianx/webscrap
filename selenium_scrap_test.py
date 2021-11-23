@@ -1,4 +1,3 @@
-from os import replace
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -16,7 +15,7 @@ driver.get("https://example.pl/category")
 
 
 driver.find_element_by_xpath('/html/body/div[6]/div[1]/div/div/div[4]/i').click()
-driver.find_element_by_xpath('/html/body/div[6]/div[2]/div/div[2]/button').click()
+driver.find_element_by_xpath('/html/body/div[6]/div[2]/div/div[1]/div[2]/div[2]/button').click()
 
 
 def extractfirmy():
@@ -31,15 +30,19 @@ def extractfirmy():
         m = mail.get_attribute("data-company-email")
 
         print(n,nr,m)
+        #df = pd.read
         writer.writerow([n,nr,m])
 
-        #df14['tup'] = df14.apply(lambda x: list(zip(x.key,x.hi)), axis=1)
-        #print (df14)
 
 
+<<<<<<< HEAD
 with open('pfkam.csv', 'w', newline='', encoding='utf_8_sig') as csvfile:
     writer = csv.writer(csvfile, dialect = 'excel', delimiter="|")
 
+=======
+with open('pftlumaczenia.csv', 'w', newline='', encoding='utf_8_sig') as csvfile:
+    writer = csv.writer(csvfile, dialect = 'excel', delimiter="|")
+>>>>>>> 2a8b842ad64a407030555a398d016ccfde7f87ff
 
     for strona in range(5): 
         naststrona = WebDriverWait(driver, 5).until(EC.presence_of_element_located((By.CSS_SELECTOR, "i[class='icon-arrow-right']")))
